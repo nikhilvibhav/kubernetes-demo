@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: minikube-backend
+  name: minikube-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: minikube-backend
+  template:
+    metadata:
+      labels:
+        app: minikube-backend
+    spec:
+      containers:
+        - image: nikhilvibhav/minikube-backend:latest
+          name: minikube-backend
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+          env:
+            - name: NAME
+              value: Nikhil Vibhav
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: minikube-backend
+  name: minikube-backend
+spec:
+  ports:
+    - name: 8080-8080
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    app: minikube-backend
+  type: ClusterIP
+status:
+  loadBalancer: { }

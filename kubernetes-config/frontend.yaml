@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: minikube-frontend
+  name: minikube-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: minikube-frontend
+  template:
+    metadata:
+      labels:
+        app: minikube-frontend
+    spec:
+      containers:
+        - image: nikhilvibhav/minikube-frontend:latest
+          name: minikube-frontend
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: minikube-frontend
+  name: minikube-frontend
+spec:
+  ports:
+    - port: 80
+      targetPort: 80
+      protocol: TCP
+      nodePort: 31000
+  selector:
+    app: minikube-frontend
+  type: NodePort
