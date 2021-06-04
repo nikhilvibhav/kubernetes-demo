@@ -15,7 +15,7 @@ spec:
         app: minikube-frontend
     spec:
       containers:
-        - image: nikhilvibhav/minikube-frontend:latest
+        - image: stakater/minikube-frontend:latest
           name: minikube-frontend
           imagePullPolicy: IfNotPresent
           ports:

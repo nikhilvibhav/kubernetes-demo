@@ -16,10 +16,12 @@ RUN npm install --silent
 ## add app
 COPY . ./
 
-## start app
+## run the build
 RUN npm run build
 
 # 2nd stage of a 2 stage build
 ## Copy build directory in previous stage to nginx container
 FROM nginx:stable-alpine
 COPY --from=builder /app/build /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
